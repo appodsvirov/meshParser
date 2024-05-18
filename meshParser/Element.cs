@@ -10,7 +10,7 @@ namespace meshParser
     public class Element
     {
         public List<Point3D> Vertices { get; set; }
-        public Element() 
+        public Element()
         {
             Vertices = new List<Point3D>();
         }
@@ -21,13 +21,13 @@ namespace meshParser
 
         public static double CalculatePolygonArea(List<Point3D> points)
         {
-            if(points.Count == 3)
+            if (points.Count == 3)
             {
                 return CalculateTriangleArea(points[0].x, points[0].y,
                                       points[1].x, points[1].y,
                                       points[2].x, points[2].y);
             }
-            if(points.Count == 4)
+            if (points.Count == 4)
             {
                 return CalculateQuadrilateralArea(points[0].x, points[0].y,
                                            points[1].x, points[1].y,
@@ -35,6 +35,51 @@ namespace meshParser
                                            points[3].x, points[3].y);
             }
             throw new ArgumentException($"Элемент состоит из {points.Count} точек");
+        }
+
+        public static double CalculateVolume(List<Point3D> points)
+        {
+            if (points.Count == 8)
+            {
+                return CalculateVolumeParallelogram(
+                           points[0].x, points[0].y, points[0].z,
+                           points[1].x, points[1].y, points[1].z,
+                           points[2].x, points[2].y, points[2].z,
+                           points[3].x, points[3].y, points[3].z,
+                           points[4].x, points[4].y, points[4].z,
+                           points[5].x, points[5].y, points[5].z,
+                           points[6].x, points[6].y, points[6].z,
+                           points[7].x, points[7].y, points[7].z
+                           );
+            }
+            throw new ArgumentException($"Элемент состоит из {points.Count} точек");
+        }
+        public static double CalculateVolumeParallelogram(
+            double x1, double y1, double z1,
+            double x2, double y2, double z2,
+            double x3, double y3, double z3,
+            double x4, double y4, double z4,
+            double x5, double y5, double z5,
+            double x6, double y6, double z6,
+            double x7, double y7, double z7,
+            double x8, double y8, double z8)
+        {
+            // Вектора исходящие из вершины A (x1, y1, z1)
+            double[] vectorA = { x2 - x1, y2 - y1, z2 - z1 };
+            double[] vectorB = { x4 - x1, y4 - y1, z4 - z1 };
+            double[] vectorC = { x5 - x1, y5 - y1, z5 - z1 };
+
+            // Векторное произведение vectorB и vectorC
+            double[] crossProduct = {
+            vectorB[1] * vectorC[2] - vectorB[2] * vectorC[1],
+            vectorB[2] * vectorC[0] - vectorB[0] * vectorC[2],
+            vectorB[0] * vectorC[1] - vectorB[1] * vectorC[0]
+        };
+
+            // Смешанное произведение vectorA и crossProduct
+            double volume = Math.Abs(vectorA[0] * crossProduct[0] + vectorA[1] * crossProduct[1] + vectorA[2] * crossProduct[2]);
+
+            return volume;
         }
 
         public static double CalculateTriangleArea(double x1, double y1,

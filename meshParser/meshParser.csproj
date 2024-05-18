@@ -11,7 +11,9 @@
     <None Remove="meshElements3D.txt" />
     <None Remove="meshVertices3D.txt" />
     <None Remove="vtkElements2D.txt" />
+    <None Remove="vtkElements3D.txt" />
     <None Remove="vtkVertices2D.txt" />
+    <None Remove="vtkVertices3D.txt" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +23,13 @@
     <Resource Include="meshVertices3D.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="vtkElements3D.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="vtkElements2D.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="vtkVertices3D.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
     <Resource Include="vtkVertices2D.txt">
