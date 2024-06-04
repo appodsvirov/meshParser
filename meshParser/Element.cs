@@ -18,6 +18,33 @@ namespace meshParser
         {
             return string.Join("; ", Vertices);
         }
+        public static double CalculateCircumscribedCircleArea(List<Point3D> points)
+        {
+            return CalculateCircumscribedCircleArea(points[0].x, points[0].y,
+                                      points[1].x, points[1].y,
+                                      points[2].x, points[2].y);
+        }
+        public static double CalculateCircumscribedCircleArea(double x1, double y1, double x2, double y2, double x3, double y3)
+        {
+            // Вычисление длин сторон треугольника
+            double a = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+            double b = Math.Sqrt(Math.Pow(x3 - x2, 2) + Math.Pow(y3 - y2, 2));
+            double c = Math.Sqrt(Math.Pow(x1 - x3, 2) + Math.Pow(y1 - y3, 2));
+
+            // Вычисление полупериметра
+            double s = (a + b + c) / 2;
+
+            // Вычисление площади треугольника по формуле Герона
+            double area = Math.Sqrt(s * (s - a) * (s - b) * (s - c));
+
+            // Вычисление радиуса описанной окружности
+            double R = (a * b * c) / (4 * area);
+
+            // Вычисление площади окружности
+            double circleArea = Math.PI * Math.Pow(R, 2);
+
+            return circleArea;
+        }
 
         public static double CalculatePolygonArea(List<Point3D> points)
         {

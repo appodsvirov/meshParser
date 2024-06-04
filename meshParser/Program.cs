@@ -1,8 +1,8 @@
 ﻿using meshParser;
 using System.Globalization;
 
-string fileVerticesPath = "vtkVertices3D.txt";
-string fileElementsPath = "vtkElements3D.txt";
+string fileVerticesPath = "vtkVertices2D.txt";
+string fileElementsPath = "vtkElements2D.txt";
 
 List<Point3D> points = new(75000);
 
@@ -47,10 +47,15 @@ if (fileVerticesPath.Contains("2D"))
     Console.WriteLine("Площадь ячеек по xy: ");
     List<double> polygonAreas = elements.Select(x => Element.CalculatePolygonArea(x.Vertices)).ToList();
     Console.WriteLine(string.Join("\n", polygonAreas));
+
+    // ПЛОЩАДИ ОПИСАННЫХ ОКРУЖНОСТЕЙ
+    Console.WriteLine("Площади описанных окружностей кажой ячейки: ");
+    List<double> circumscribedCircleArea = elements.Select(x => Element.CalculateCircumscribedCircleArea(x.Vertices)).ToList();
+    Console.WriteLine(string.Join("\n", circumscribedCircleArea));
 }
 else if (fileVerticesPath.Contains("3D"))
 {
-    // ПЛОЩАДЬ
+    // ОБЪЕМ
     Console.WriteLine("Объем ячеек по xyz: ");
     List<double> volumeParallelogram = elements.Select(x => Element.CalculateVolume(x.Vertices)).ToList();
     Console.WriteLine(string.Join("\n", volumeParallelogram));
