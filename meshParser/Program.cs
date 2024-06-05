@@ -1,8 +1,8 @@
 ﻿using meshParser;
 using System.Globalization;
 
-string fileVerticesPath = "vtkVertices2D.txt";
-string fileElementsPath = "vtkElements2D.txt";
+string fileVerticesPath = "0506_3D_100_000_Vertices_3D.txt";
+string fileElementsPath = "0506_3D_100_000_Elements_3D.txt";
 
 List<Point3D> points = new(75000);
 
@@ -43,7 +43,7 @@ using (StreamReader sr = new(fileElementsPath))
 
 if (fileVerticesPath.Contains("2D"))
 {
-    // ПЕРИМЕТР
+    // ПЛОЩАДЬ
     Console.WriteLine("Площадь ячеек по xy: ");
     List<double> polygonAreas = elements.Select(x => Element.CalculatePolygonArea(x.Vertices)).ToList();
     Console.WriteLine(string.Join("\n", polygonAreas));
@@ -58,7 +58,11 @@ else if (fileVerticesPath.Contains("3D"))
     // ОБЪЕМ
     Console.WriteLine("Объем ячеек по xyz: ");
     List<double> volumeParallelogram = elements.Select(x => Element.CalculateVolume(x.Vertices)).ToList();
-    Console.WriteLine(string.Join("\n", volumeParallelogram));
+    //Console.WriteLine(string.Join("\n", volumeParallelogram));
+    using (var sw = new StreamWriter("output.txt"))
+    {
+        sw.WriteLine(string.Join("\n", volumeParallelogram));
+    }
 }
 
 
